@@ -1,18 +1,18 @@
 # EVSLocator
 A EVS (Electric Vehicle Station) Locator developed using the Django Rest API Framework.
 
-## Setup mini-wallet
+## Setup evslocator
 ### Required steps to run services
 
 #### Git clone repo
-> - [x] ```git clone https://github.com/mehta-smit/mini-wallet.git ~/mini-wallet```
-> - [x] ```cd ~/mini-wallet```
+> - [x] ```git clone https://github.com/akshaynavale20/teamop-backend.git ~/evslocator```
+> - [x] ```cd ~/evslocator```
 
 #### Create Virtualenv
-> - [x] ```virtualenv ~/virt/mini-wallet -p python3```
+> - [x] ```virtualenv ~/virt/evslocator -p python3```
 
 #### Activate Virtualenv
-> - [x] ```source ~/virt/mini-wallet/bin/activate```
+> - [x] ```source ~/virt/evslocator/bin/activate```
 
 #### Install Required PIP Packages
 > - [x] ```pip install -U -r requirements.txt```
@@ -20,10 +20,8 @@ A EVS (Electric Vehicle Station) Locator developed using the Django Rest API Fra
 
 ## Setup DB
 #### Setup Database using Django ORM
-> - [x] ```cd ~/mini-wallet/mini_wallet```
+> - [x] ```cd ~/evslocator/src```
 > - [x] ```python manage.py makemigrations```
-> - [x] ```python manage.py migrate```
-> - [x] ```python manage.py sqlmigrate wallet 0001```
 > - [x] ```python manage.py migrate```
 
 ### Start Service
@@ -31,7 +29,7 @@ A EVS (Electric Vehicle Station) Locator developed using the Django Rest API Fra
 
 
 ### Create A superuser for Django Admin Panel
-#### To access the DB Tables and manipulate it's data from Admin Panel.
+#### To access the DB Tables and manipulate it is data from Admin Panel.
 > - [x] ```python manage.py createsuperuser```
 
  
