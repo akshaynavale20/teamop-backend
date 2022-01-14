@@ -15,8 +15,10 @@ class BaseClass(models.Model):
 
 
 # Create your models here.
-class User(BaseClass):
+class Customer(BaseClass):
     username = models.CharField(unique=True, max_length=255)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
     display_name = models.CharField(max_length=255, blank=True, null=True)
     email = models.CharField(unique=True, max_length=255)
@@ -25,7 +27,7 @@ class User(BaseClass):
 
     class Meta:
         managed = settings.MANAGE_TABLES
-        db_table = "user"
+        db_table = "customer"
 
 
 class EVStationInfo(BaseClass):
@@ -41,13 +43,21 @@ class EVStationInfo(BaseClass):
     area_code = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
 
+    class Meta:
+        managed = settings.MANAGE_TABLES
+        db_table = "ev_station_info"
 
-class ScheduleSlot(BaseClass):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class EVScheduleSlot(BaseClass):
+    user = models.ForeignKey(Customer, on_delete=models.CASCADE)
     ev_station = models.ForeignKey(EVStationInfo, on_delete=models.CASCADE)
     free_from = models.DateTimeField(auto_now_add=True, editable=True)
     free_to = models.DateTimeField(default=datetime.datetime.utcnow() + datetime.timedelta(hours=1), editable=True)
     payment_mode = models.CharField(max_length=255)
+
+    class Meta:
+        managed = settings.MANAGE_TABLES
+        db_table = "ev_schedule_slot"
 
 
 class EVStationsSlot(BaseClass):
@@ -58,4 +68,6 @@ class EVStationsSlot(BaseClass):
     end_hours = models.TimeField()
     available_24_hour = models.BooleanField(default=True)
 
-
+    class Meta:
+        managed = settings.MANAGE_TABLES
+        db_table = "ev_station_slot"
