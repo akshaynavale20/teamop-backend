@@ -21,7 +21,7 @@ A EVS (Electric Vehicle Station) Locator developed using the Django Rest API Fra
 ## Setup DB
 #### Setup Database using Django ORM
 > - [x] ```cd ~/mini-wallet/mini_wallet```
-> - [x] ```python manage.py makemigrations.py```
+> - [x] ```python manage.py makemigrations```
 > - [x] ```python manage.py migrate```
 > - [x] ```python manage.py sqlmigrate wallet 0001```
 > - [x] ```python manage.py migrate```

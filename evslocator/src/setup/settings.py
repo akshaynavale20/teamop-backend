@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Custom App
     'evslocator',
+    'setup'
 ]
 
 MIDDLEWARE = [
@@ -70,17 +71,24 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'setup.wsgi.application'
-
+MANAGE_TABLES = False
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+           'init_command': 'SET default_storage_engine=INNODB',
+        },
+        'NAME': 'ev_finder',
+        'USER': 'admin',
+        'PASSWORD': 'AkshayN@123',
+        'HOST': '147.139.30.53',
+        'PORT': '3306'
     }
 }
+
 
 
 # Password validation
