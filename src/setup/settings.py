@@ -39,8 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Custom App
     'evslocator',
-    'setup',
-    'rest_framework'
+    'setup'
 ]
 
 MIDDLEWARE = [
