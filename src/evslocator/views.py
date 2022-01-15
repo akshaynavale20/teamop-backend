@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST
 from rest_framework.views import APIView
 
-from src.evslocator.serializer.ev_station_slot import EVStationSlotSerializer
+from evslocator.serializer.ev_station_slot import EVStationSlotSerializer
 from .utils import response_formatter
 
 
@@ -16,10 +16,10 @@ class EVSlots(APIView):
 
     def post(self, request):
         requested_data = request.data
-        wallet_obj = EVStationSlotSerializer.get_ev_station_by_id(ev_station_id=requested_data.get('ev_station_id'))
-        if not wallet_obj:
-            return response_formatter(HTTP_400_BAD_REQUEST, "Something went wrong.")
-        return self._prepare_response(requested_data['ev_station_id'], wallet_obj)
+        ev_station_slots = EVStationSlotSerializer.get_ev_station_by_id(ev_station_id=requested_data.get('ev_station_id'))
+        if not ev_station_slots:
+            return response_formatter(HTTP_400_BAD_REQUEST, "EV Station has no slot.")
+        return self._prepare_response(requested_data['ev_station_id'], ev_station_slots)
 
     def _prepare_response(self, ev_station_id, slots):
         return Response(dict(
