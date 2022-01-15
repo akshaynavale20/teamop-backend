@@ -6,7 +6,4 @@ from evslocator.utils import response_formatter
 
 class EVStationInfoAPIView(APIView):
     def get(self, request):
-        print(request)
-        import pdb;
-        pdb.set_trace()
-        EVStationInfoSerializer.get_ev_station_all()
+        pass

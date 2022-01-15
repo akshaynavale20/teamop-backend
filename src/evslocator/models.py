@@ -25,6 +25,8 @@ class Customer(BaseClass):
     phone = models.CharField(max_length=255, blank=True, null=True)
     role = models.CharField(max_length=255, blank=True, null=True)
 
+    objects = models.Manager()
+
     class Meta:
         managed = settings.MANAGE_TABLES
         db_table = "customer"
@@ -42,6 +44,8 @@ class EVStationInfo(BaseClass):
     area_code = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
 
+    objects = models.Manager()
+
     class Meta:
         managed = settings.MANAGE_TABLES
         db_table = "ev_station_info"
@@ -55,6 +59,8 @@ class EVStationsSlot(BaseClass):
     end_hours = models.TimeField(blank=True, editable=True)
     is_available_24_hours = models.BooleanField(default=True)
 
+    objects = models.Manager()
+
     class Meta:
         managed = settings.MANAGE_TABLES
         db_table = "ev_station_slot"
@@ -66,6 +72,8 @@ class EVScheduleSlot(BaseClass):
     free_from = models.DateTimeField(auto_now_add=True, editable=True)
     free_to = models.DateTimeField(default=datetime.datetime.utcnow() + datetime.timedelta(hours=1), editable=True)
     payment_mode = models.CharField(max_length=255)
+
+    objects = models.Manager()
 
     class Meta:
         managed = settings.MANAGE_TABLES
