@@ -7,9 +7,6 @@ from django.db import models
 class BaseClass(models.Model):
     id = models.IntegerField(primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    modified_at = models.DateTimeField(auto_now=True)
-    is_deleted = models.BooleanField(default=False)
-
     class Meta:
         abstract = True
 
@@ -61,13 +58,15 @@ class EVScheduleSlot(BaseClass):
 
 
 class EVStationsSlot(BaseClass):
-    ev_station = models.ForeignKey(EVStationInfo, on_delete=models.CASCADE)
+    # ev_station = models.ForeignKey(EVStationInfo, on_delete=models.CASCADE)
     is_free = models.BooleanField(default=True)
     charges_per_hour = models.FloatField(default=0)
     start_hours = models.TimeField()
     end_hours = models.TimeField()
     available_24_hour = models.BooleanField(default=True)
-
+    free_from = models.DateTimeField(auto_now_add=True, editable=True)
+    free_until = models.DateTimeField(default=datetime.datetime.utcnow() + datetime.timedelta(hours=1), editable=True)
+    ev_stationId = models.IntegerField()
     class Meta:
         managed = settings.MANAGE_TABLES
         db_table = "ev_station_slot"

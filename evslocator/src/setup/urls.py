@@ -18,5 +18,5 @@ from django.urls import path
 from evslocator import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('health/', views.index, name='index'),
+    path('v1/evslocator/getslots', views.EVSlots.as_view(), name='getslots'),
 ]
