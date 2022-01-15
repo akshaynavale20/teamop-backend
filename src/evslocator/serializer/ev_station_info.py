@@ -41,3 +41,14 @@ class EVStationInfoSerializer(ModelSerializer):
     @classmethod
     def get_ev_station_all(cls):
         return EVStationInfo.objects.all()
+
+    @classmethod
+    def get_filtered_ev_stations(cls, state, city, area):
+        ev_station_qs = EVStationInfo.objects
+        if state:
+            ev_station_qs.filter(state=state)
+        if city:
+            ev_station_qs.filter(city=city)
+        if area:
+            ev_station_qs.filter(area_code=area)
+        return ev_station_qs.all()

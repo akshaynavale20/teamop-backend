@@ -47,4 +47,7 @@ urlpatterns = [
         EVAreasAPIView.as_view(),
         name='get-all-area-by-state'
     ),
+
+    path('v1/evslocator/evs/info/', EVStationInfoAPIView.as_view(), name='get-all-filtered-evs'),
+    path('v1/evslocator/evs/info/<evs_id>', EVStationInfoAPIView.as_view(), name='get-evs'),
 ]
