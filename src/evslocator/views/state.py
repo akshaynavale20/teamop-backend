@@ -49,15 +49,19 @@ class EVCitiesAPIView(APIView):
 
 class EVAreasAPIView(APIView):
 
-    def get(self, request):
-        requested_data = request.data
-        states_obj = EVCityAreaSerializer.get_area(city_id=requested_data.get('city_id'),
-                                                   state_id=requested_data.get('state_id'))
-        if not states_obj:
-            return response_formatter(HTTP_400_BAD_REQUEST, "Something went wrong.")
-        return self._prepare_response(states_obj)
+    def get(self, request, state=None, city=None):
+        if state and city:
+            areas = EVCityAreaSerializer.get_area_by_state_and_city(state, city)
+        elif state and not city:
+            areas = EVCityAreaSerializer.get_area_by_state(state)
+        else:
+            areas = EVCityAreaSerializer.get_all_area()
 
-    def _prepare_response(self, cities):
+        if not areas:
+            return response_formatter(HTTP_400_BAD_REQUEST, "Something went wrong.")
+        return self._prepare_response(areas)
+
+    def _prepare_response(self, areas):
         return response_formatter(
             status_code='200',
             message="Success!",
@@ -66,5 +70,5 @@ class EVAreasAPIView(APIView):
                 'state_id': area.state_id,
                 'city_id': area.city_id,
                 'area_id': area.area_id
-            } for area in cities]}
+            } for area in areas]}
         )

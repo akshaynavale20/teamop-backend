@@ -43,5 +43,17 @@ class EVCityAreaSerializer(ModelSerializer):
         )
 
     @classmethod
-    def get_area(cls, state_id, city_id):
-        return EVAreas.objects.filter(city_id=city_id, state_id=state_id)
+    def get_area(cls, area_id):
+        return EVAreas.objects.get(area_id=area_id)
+
+    @classmethod
+    def get_area_by_state(cls, state):
+        return EVAreas.objects.filter(state_id=state).all()
+
+    @classmethod
+    def get_area_by_state_and_city(cls, state, city):
+        return EVAreas.objects.filter(state_id=state, city_id=city).all()
+
+    @classmethod
+    def get_all_area(cls):
+        return EVAreas.objects.all()

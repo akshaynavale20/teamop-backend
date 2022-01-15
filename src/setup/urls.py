@@ -24,10 +24,27 @@ from evslocator.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('v1/evslocator/slots/', EVSlotsAPIView.as_view(), name='Slots'),
-    path('v1/evslocator/states/', EVStatesAPIView.as_view(), name='States'),
+
     path('health/', index, name='index'),
     path('v1/evslocator/evstation/info', EVStationInfoAPIView.as_view(), name='ev-station-info'),
-    path('v1/evslocator/cities/<state_id>', EVCitiesAPIView.as_view(), name='Cities'),
-    path('v1/evslocator/cities', EVCitiesAPIView.as_view(), name='Cities'),
-    path('v1/evslocator/areas', EVAreasAPIView.as_view(), name='Areas'),
+
+    # get state
+    path('v1/evslocator/state', EVStatesAPIView.as_view(), name='get-all-state'),
+
+    # get city
+    path('v1/evslocator/state/city', EVCitiesAPIView.as_view(), name='get-all-cities'),
+    path('v1/evslocator/state/<state_id>/city', EVCitiesAPIView.as_view(), name='get-cities-by-state'),
+
+    # get area
+    path('v1/evslocator/state/city/area', EVAreasAPIView.as_view(), name='get-all-area'),
+    path(
+        'v1/evslocator/state/<state>/city/<city>/area',
+        EVAreasAPIView.as_view(),
+        name='get-all-area-by-state-and-city'
+    ),
+    path(
+        'v1/evslocator/state/<state>/city/area',
+        EVAreasAPIView.as_view(),
+        name='get-all-area-by-state'
+    ),
 ]
