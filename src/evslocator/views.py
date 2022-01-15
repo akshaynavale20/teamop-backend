@@ -4,7 +4,9 @@ from rest_framework.status import HTTP_400_BAD_REQUEST
 from rest_framework.views import APIView
 
 from evslocator.serializer.ev_station_slot import EVStationSlotSerializer
+from evslocator.serializer.ev_schedule_slot import EVScheduleSlotSerializer
 from evslocator.serializer.states import StatesSerializer
+from evslocator.serializer.ev_station_cities import EVCitiesSerializer,EVCityAreaSerializer
 from .utils import response_formatter
 
 
@@ -28,13 +30,11 @@ class EVSlots(APIView):
             status='success',
             data=dict(slots=dict(
                 ev_station_id=ev_station_id,
-                is_free=slots.is_free,
-                charges_per_hour=slots.charges_per_hour,
-                free_from=slots.free_from,
-                free_until=slots.free_until,
-                start_hours=slots.start_hours,
-                end_hours=slots.end_hours,
-                available_24_hour=slots.available_24_hour
+                is_occupied = slots.is_occupied,
+                start_hours = slots.start_hours,
+                end_hours= slots.end_hours,
+                is_available_24_hours = slots.is_available_24_hours,
+
             ))
         ))
 
@@ -55,4 +55,45 @@ class EVStates(APIView):
                 'state_name': state.state_name,
                 'state_id': state.state_id
             } for state in states]}
+        )
+class EVCities(APIView):
+
+    def post(self, request):
+        requested_data = request.data
+        states_obj = EVCitiesSerializer.get_cities(state_id=requested_data.get('state_id'))
+        if not states_obj:
+            return response_formatter(HTTP_400_BAD_REQUEST, "Something went wrong.")
+        return self._prepare_response(states_obj)
+
+    def _prepare_response(self, cities):
+        return response_formatter(
+            status_code='200',
+            message="Success!",
+            response={'cities': [{
+                'city_name': city.city_name,
+                'state_id': city.state_id,
+                'city_id': city.city_id
+            } for city in cities]}
+        )
+
+
+class EVAreas(APIView):
+
+    def post(self, request):
+        requested_data = request.data
+        states_obj = EVCityAreaSerializer.get_area(city_id=requested_data.get('city_id'),state_id=requested_data.get('state_id'))
+        if not states_obj:
+            return response_formatter(HTTP_400_BAD_REQUEST, "Something went wrong.")
+        return self._prepare_response(states_obj)
+
+    def _prepare_response(self, cities):
+        return response_formatter(
+            status_code='200',
+            message="Success!",
+            response={'areas': [{
+                'area_name': area.area_name,
+                'state_id': area.state_id,
+                'city_id': area.city_id,
+                'area_id': area.area_id
+            } for area in cities]}
         )

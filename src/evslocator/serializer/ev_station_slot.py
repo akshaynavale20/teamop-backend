@@ -30,7 +30,7 @@ class EVStationSlotSerializer(ModelSerializer):
 
     @classmethod
     def get_ev_station_by_id(cls, ev_station_id):
-        return EVStationsSlot.objects.filter(ev_station__id=ev_station_id).all()
+        return EVStationsSlot.objects.get(ev_station__id=ev_station_id)
 
     def get_all_ev_stations(self):
         return EVStationsSlot.objects.select('ev_station').all()
