@@ -78,3 +78,19 @@ class EVStates(BaseClass):
     class Meta:
         managed = settings.MANAGE_TABLES
         db_table = "states"
+class EVCities(BaseClass):
+    city_id = models.IntegerField()
+    state_id = models.IntegerField()
+    city_name  = models.CharField(max_length=255)
+    class Meta:
+        managed = settings.MANAGE_TABLES
+        db_table = "cities"
+
+class EVAreas(BaseClass):
+    city_id = models.IntegerField()
+    state_id = models.IntegerField()
+    area_id = models.IntegerField()
+    area_name  = models.CharField(max_length=255)
+    class Meta:
+        managed = settings.MANAGE_TABLES
+        db_table = "area"
