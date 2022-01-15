@@ -18,7 +18,7 @@ from django.urls import path
 
 from evslocator.views import (
     EVStationInfoAPIView, EVStatesAPIView, EVSlotsAPIView,
-    index
+    index, EVCitiesAPIView, EVAreasAPIView
 )
 
 urlpatterns = [
@@ -26,5 +26,8 @@ urlpatterns = [
     path('v1/evslocator/slots/', EVSlotsAPIView.as_view(), name='Slots'),
     path('v1/evslocator/states/', EVStatesAPIView.as_view(), name='States'),
     path('health/', index, name='index'),
-    path('v1/evslocator/evstation/info', EVStationInfoAPIView.as_view(), name='ev-station-info')
+    path('v1/evslocator/evstation/info', EVStationInfoAPIView.as_view(), name='ev-station-info'),
+    path('v1/evslocator/cities/<state_id>', EVCitiesAPIView.as_view(), name='Cities'),
+    path('v1/evslocator/cities', EVCitiesAPIView.as_view(), name='Cities'),
+    path('v1/evslocator/areas', EVAreasAPIView.as_view(), name='Areas'),
 ]

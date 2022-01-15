@@ -73,7 +73,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'setup.wsgi.application'
-MANAGE_TABLES = False
+MANAGE_TABLES = True
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

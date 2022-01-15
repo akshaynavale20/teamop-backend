@@ -1,15 +1,15 @@
 from rest_framework.serializers import (
-    ModelSerializer, IntegerField, CharField, DateTimeField,
-    RelatedField
+    ModelSerializer, IntegerField, CharField
 )
 
-from evslocator.models import EVCities,EVAreas
+from evslocator.models import EVCities, EVAreas
 
 
 class EVCitiesSerializer(ModelSerializer):
     state_id = IntegerField(read_only=True, required=False)
     city_id = IntegerField(read_only=True, required=False)
     city_name = CharField(max_length=255)
+
     class Meta:
         model = EVCities
         field = (
@@ -17,15 +17,22 @@ class EVCitiesSerializer(ModelSerializer):
             'city_id',
             'city_name'
         )
+
     @classmethod
-    def get_cities(cls, state_id):
-        return EVCities.objects.filter(state_id=state_id)
+    def get_cities_by_state(cls, state):
+        return EVCities.objects.filter(state_id=state).all()
+
+    @classmethod
+    def get_all_cities(cls):
+        return EVCities.objects.all()
+
 
 class EVCityAreaSerializer(ModelSerializer):
     state_id = IntegerField(read_only=True, required=False)
     city_id = IntegerField(read_only=True, required=False)
     area_id = CharField(max_length=255)
     area_name = IntegerField(read_only=True, required=False)
+
     class Meta:
         model = EVAreas
         field = (
@@ -34,6 +41,7 @@ class EVCityAreaSerializer(ModelSerializer):
             'area_name',
             'area_id',
         )
+
     @classmethod
-    def get_area(cls, state_id,city_id):
-        return EVAreas.objects.filter(city_id=city_id,state_id=state_id)
+    def get_area(cls, state_id, city_id):
+        return EVAreas.objects.filter(city_id=city_id, state_id=state_id)

@@ -1,11 +1,44 @@
+from django.http import HttpResponse
+from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST
 from rest_framework.views import APIView
 
-from evslocator.serializer import EVCitiesSerializer, EVCityAreaSerializer, StatesSerializer
-from evslocator.utils import response_formatter
+from evslocator.serializer.ev_station_cities import EVCitiesSerializer, EVCityAreaSerializer
+from evslocator.serializer.ev_station_slot import EVStationSlotSerializer
+from evslocator.serializer.states import StatesSerializer
+from .utils import response_formatter
 
 
-class EVStatesAPIView(APIView):
+# Create your views here.
+def index(self, request):
+    return HttpResponse("Hello, Welcome to EVS Locator")
+
+
+class EVSlots(APIView):
+
+    def post(self, request):
+        requested_data = request.data
+        ev_station_slots = EVStationSlotSerializer.get_ev_station_by_id(
+            ev_station_id=requested_data.get('ev_station_id'))
+        if not ev_station_slots:
+            return response_formatter(HTTP_400_BAD_REQUEST, "EV Station has no slot.")
+        return self._prepare_response(requested_data['ev_station_id'], ev_station_slots)
+
+    def _prepare_response(self, ev_station_id, slots):
+        return Response(dict(
+            status='success',
+            data=dict(slots=dict(
+                ev_station_id=ev_station_id,
+                is_occupied=slots.is_occupied,
+                start_hours=slots.start_hours,
+                end_hours=slots.end_hours,
+                is_available_24_hours=slots.is_available_24_hours,
+
+            ))
+        ))
+
+
+class EVStates(APIView):
 
     def get(self, request):
         states_obj = StatesSerializer.get_states()
@@ -24,16 +57,14 @@ class EVStatesAPIView(APIView):
         )
 
 
-class EVCitiesAPIView(APIView):
+class EVCities(APIView):
 
-    def get(self, request, state_id=None):
-        if state_id:
-            cities = EVCitiesSerializer.get_cities_by_state(state=state_id)
-        else:
-            cities = EVCitiesSerializer.get_all_cities()
-        if not cities:
+    def post(self, request):
+        requested_data = request.data
+        states_obj = EVCitiesSerializer.get_cities(state_id=requested_data.get('state_id'))
+        if not states_obj:
             return response_formatter(HTTP_400_BAD_REQUEST, "Something went wrong.")
-        return self._prepare_response(cities)
+        return self._prepare_response(states_obj)
 
     def _prepare_response(self, cities):
         return response_formatter(
@@ -47,9 +78,9 @@ class EVCitiesAPIView(APIView):
         )
 
 
-class EVAreasAPIView(APIView):
+class EVAreas(APIView):
 
-    def get(self, request):
+    def post(self, request):
         requested_data = request.data
         states_obj = EVCityAreaSerializer.get_area(city_id=requested_data.get('city_id'),
                                                    state_id=requested_data.get('state_id'))
