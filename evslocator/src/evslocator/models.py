@@ -70,3 +70,12 @@ class EVStationsSlot(BaseClass):
     class Meta:
         managed = settings.MANAGE_TABLES
         db_table = "ev_station_slot"
+
+
+class EVStates(BaseClass):
+    state_id = models.IntegerField()
+    state_name = models.CharField(max_length=255)
+    class Meta:
+        managed = settings.MANAGE_TABLES
+        db_table = "states"
+

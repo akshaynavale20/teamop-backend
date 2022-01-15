@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from evslocator.models import EVScheduleSlot
 from evslocator.serializer.slots import SlotSerializer
+from evslocator.serializer.states import StatesSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -34,3 +35,23 @@ class EVSlots(APIView):
                 available_24_hour = slots.available_24_hour
             ))
         ))
+
+
+class EVStates(APIView):
+
+    def get(self, request):
+        states_obj = StatesSerializer.get_states()
+        if not states_obj:
+            return response_formatter(HTTP_400_BAD_REQUEST, "Something went wrong.")
+        return self._prepare_response(states_obj)
+
+    def _prepare_response(self, states):
+       # import pdb; pdb.set_trace()
+        print(states)
+        return Response(dict(
+            status='success',
+            data={'states': [{
+                'state_name': state.state_name,
+                'state_id': state.state_id
+            }for state in states]
+       }))

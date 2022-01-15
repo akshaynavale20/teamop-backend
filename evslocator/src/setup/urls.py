@@ -19,4 +19,5 @@ from evslocator import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('v1/evslocator/getslots', views.EVSlots.as_view(), name='getslots'),
+    path('v1/evslocator/getstates', views.EVStates.as_view(), name='getstates'),
 ]
