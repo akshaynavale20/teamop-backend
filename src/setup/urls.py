@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from src.evslocator.views import EVSlots, index
+from evslocator.views import EVSlots, index
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -1,14 +1,15 @@
 from rest_framework.serializers import (
-    ModelSerializer, IntegerField, CharField, BooleanField, DateTimeField,
+    ModelSerializer, IntegerField, CharField, DateTimeField,
     RelatedField
 )
 
-from src.evslocator.models import EVScheduleSlot
+from evslocator.models import EVScheduleSlot
+from evslocator.serializer import CustomerSerializer
 
 
 class EVScheduleSlotSerializer(ModelSerializer):
     id = IntegerField(read_only=True, required=False)
-    user = RelatedField(many=True)
+    customer = CustomerSerializer(many=True)
     ev_station = RelatedField(many=True)
     free_from = DateTimeField(required=True, allow_null=False)
     free_to = DateTimeField(required=True, allow_null=False)

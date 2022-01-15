@@ -1,16 +1,17 @@
 from rest_framework.serializers import (
-    ModelSerializer, IntegerField, CharField, TimeField, BooleanField,
-    RelatedField, FloatField
+    ModelSerializer, IntegerField, TimeField, BooleanField,
+    FloatField
 )
 
-from src.evslocator.models import EVStationsSlot
+from evslocator.models import EVStationsSlot
+from evslocator.serializer import EVStationInfoSerializer
 
 
 class EVStationSlotSerializer(ModelSerializer):
     id = IntegerField(read_only=True, required=False)
-    ev_station = RelatedField(many=True)
+    ev_station = EVStationInfoSerializer()
     is_occupied = BooleanField(default=False, required=False, allow_null=False)
-    charges_per_hour = FloatField(default=0, required=True, allow_null=False)
+    charges_per_hour = FloatField(required=True, allow_null=False)
     start_hours = TimeField(required=False, allow_null=True)
     end_hours = TimeField(required=False, allow_null=True)
     is_available_24_hours = BooleanField(default=True, required=False, allow_null=False)
@@ -29,4 +30,7 @@ class EVStationSlotSerializer(ModelSerializer):
 
     @classmethod
     def get_ev_station_by_id(cls, ev_station_id):
-        return EVStationsSlot.objects.get(ev_station__id=ev_station_id)
+        return EVStationsSlot.objects.filter(ev_station__id=ev_station_id).all()
+
+    def get_all_ev_stations(self):
+        return EVStationsSlot.objects.select('ev_station').all()

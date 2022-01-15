@@ -2,7 +2,7 @@ from rest_framework.serializers import (
     ModelSerializer, IntegerField, CharField, EmailField
 )
 
-from src.evslocator.models import Customer
+from evslocator.models import Customer
 
 
 class CustomerSerializer(ModelSerializer):

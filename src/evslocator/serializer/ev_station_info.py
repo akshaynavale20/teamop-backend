@@ -1,8 +1,8 @@
-
-from rest_framework.serializers import  (
-    ModelSerializer, IntegerField, BooleanField, CharField
+from rest_framework.serializers import (
+    ModelSerializer, IntegerField, CharField
 )
-from src.evslocator.models import EVStationInfo
+
+from evslocator.models import EVStationInfo
 
 
 class EVStationInfoSerializer(ModelSerializer):
@@ -17,7 +17,7 @@ class EVStationInfoSerializer(ModelSerializer):
     city = CharField(required=True, allow_null=False)
     area_code = CharField(required=True, allow_null=False)
     phone = CharField(required=True, allow_null=False)
-    
+
     class Meta:
         model = EVStationInfo
         fields = (
@@ -33,6 +33,3 @@ class EVStationInfoSerializer(ModelSerializer):
             'area_code',
             'phone'
         )
-
-
-

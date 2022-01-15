@@ -32,7 +32,7 @@ class Customer(BaseClass):
 
 class EVStationInfo(BaseClass):
     ev_station_name = models.CharField(max_length=255)
-    ev_address = models.CharField(max_lenght=255)
+    ev_address = models.CharField(max_length=255)
     rating = models.SmallIntegerField(default=0)
     latitude = models.CharField(max_length=255)
     longitude = models.CharField(max_length=255)
@@ -61,7 +61,7 @@ class EVStationsSlot(BaseClass):
 
 
 class EVScheduleSlot(BaseClass):
-    user = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     ev_station_slot = models.ForeignKey(EVStationsSlot, on_delete=models.CASCADE)
     free_from = models.DateTimeField(auto_now_add=True, editable=True)
     free_to = models.DateTimeField(default=datetime.datetime.utcnow() + datetime.timedelta(hours=1), editable=True)
