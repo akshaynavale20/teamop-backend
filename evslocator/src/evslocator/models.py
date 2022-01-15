@@ -32,7 +32,7 @@ class Customer(BaseClass):
 
 class EVStationInfo(BaseClass):
     ev_station_name = models.CharField(max_length=255)
-    ev_address = models.CharField(max_lenght=255)
+    ev_address = models.CharField(max_length=255)
     ev_pricing = models.FloatField(default=0)
     rating = models.SmallIntegerField(default=0)
     latitude = models.CharField(max_length=255)
