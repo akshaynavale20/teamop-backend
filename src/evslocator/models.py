@@ -1,6 +1,3 @@
-import datetime
-
-from django.conf import settings
 from django.db import models
 
 
@@ -28,7 +25,6 @@ class Customer(BaseClass):
     objects = models.Manager()
 
     class Meta:
-        managed = settings.MANAGE_TABLES
         db_table = "customer"
 
 
@@ -47,7 +43,6 @@ class EVStationInfo(BaseClass):
     objects = models.Manager()
 
     class Meta:
-        managed = settings.MANAGE_TABLES
         db_table = "ev_station_info"
 
 
@@ -62,7 +57,6 @@ class EVStationsSlot(BaseClass):
     objects = models.Manager()
 
     class Meta:
-        managed = settings.MANAGE_TABLES
         db_table = "ev_station_slot"
 
 
@@ -70,13 +64,12 @@ class EVScheduleSlot(BaseClass):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     ev_station_slot = models.ForeignKey(EVStationsSlot, on_delete=models.CASCADE)
     free_from = models.DateTimeField(auto_now_add=True, editable=True)
-    free_to = models.DateTimeField(default=datetime.datetime.utcnow() + datetime.timedelta(hours=1), editable=True)
+    free_to = models.DateTimeField(editable=True)
     payment_mode = models.CharField(max_length=255)
 
     objects = models.Manager()
 
     class Meta:
-        managed = settings.MANAGE_TABLES
         db_table = "ev_schedule_slot"
 
 
@@ -85,7 +78,7 @@ class EVStates(BaseClass):
     state_name = models.CharField(max_length=255)
 
     class Meta:
-        managed = settings.MANAGE_TABLES
+        managed = False
         db_table = "states"
 
 
@@ -95,7 +88,7 @@ class EVCities(BaseClass):
     city_name = models.CharField(max_length=255)
 
     class Meta:
-        managed = settings.MANAGE_TABLES
+        managed = False
         db_table = "cities"
 
 
@@ -106,5 +99,5 @@ class EVAreas(BaseClass):
     area_name = models.CharField(max_length=255)
 
     class Meta:
-        managed = settings.MANAGE_TABLES
+        managed = False
         db_table = "area"

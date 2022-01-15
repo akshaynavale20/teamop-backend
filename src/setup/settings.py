@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     # Custom App
     'evslocator',
+    'evslocator.apps',
     'setup'
 ]
 
@@ -73,7 +74,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'setup.wsgi.application'
-MANAGE_TABLES = True
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
