@@ -47,18 +47,6 @@ class EVStationInfo(BaseClass):
         db_table = "ev_station_info"
 
 
-class EVScheduleSlot(BaseClass):
-    user = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    ev_station_slot = models.ForeignKey(EVStationsSlot, on_delete=models.CASCADE)
-    free_from = models.DateTimeField(auto_now_add=True, editable=True)
-    free_to = models.DateTimeField(default=datetime.datetime.utcnow() + datetime.timedelta(hours=1), editable=True)
-    payment_mode = models.CharField(max_length=255)
-
-    class Meta:
-        managed = settings.MANAGE_TABLES
-        db_table = "ev_schedule_slot"
-
-
 class EVStationsSlot(BaseClass):
     ev_station = models.ForeignKey(EVStationInfo, on_delete=models.CASCADE)
     is_occupied = models.BooleanField(default=True)
@@ -70,3 +58,15 @@ class EVStationsSlot(BaseClass):
     class Meta:
         managed = settings.MANAGE_TABLES
         db_table = "ev_station_slot"
+
+
+class EVScheduleSlot(BaseClass):
+    user = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    ev_station_slot = models.ForeignKey(EVStationsSlot, on_delete=models.CASCADE)
+    free_from = models.DateTimeField(auto_now_add=True, editable=True)
+    free_to = models.DateTimeField(default=datetime.datetime.utcnow() + datetime.timedelta(hours=1), editable=True)
+    payment_mode = models.CharField(max_length=255)
+
+    class Meta:
+        managed = settings.MANAGE_TABLES
+        db_table = "ev_schedule_slot"
