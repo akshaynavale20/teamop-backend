@@ -1,16 +1,16 @@
+from django.db.models import Q
 from rest_framework.serializers import (
-    ModelSerializer, IntegerField, CharField, DateTimeField,
-    RelatedField
+    ModelSerializer, IntegerField, CharField, DateTimeField
 )
 
 from evslocator.models import EVScheduleSlot
-from evslocator.serializer import CustomerSerializer, EVStationInfoSerializer
+from evslocator.serializer import CustomerSerializer, EVStationSlotSerializer
 
 
 class EVScheduleSlotSerializer(ModelSerializer):
     id = IntegerField(read_only=True, required=False)
     customer = CustomerSerializer(many=True)
-    ev_station = EVStationInfoSerializer(many=True)
+    ev_station_slot = EVStationSlotSerializer(many=True)
     free_from = DateTimeField(required=True, allow_null=False)
     free_to = DateTimeField(required=True, allow_null=False)
     payment_mode = CharField()
@@ -27,3 +27,11 @@ class EVScheduleSlotSerializer(ModelSerializer):
             'payment_mode',
             'created_at'
         )
+
+    @classmethod
+    def check_evs_schedule_availability_for_slot(cls, ev_station_ids, from_slot, to_slot):
+        qs = Q(ev_station__id__in=ev_station_ids)
+        qs.add(Q(is_deleted=False), Q.AND)
+        qs.add(Q(free_from__gte=from_slot), Q.AND)
+        qs.add(Q(free_to__lte=to_slot), Q.OR)
+        return EVScheduleSlot.objects.filter(qs).all()

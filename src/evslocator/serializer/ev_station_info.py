@@ -52,3 +52,31 @@ class EVStationInfoSerializer(ModelSerializer):
         if area:
             ev_station_qs.filter(area_code=area)
         return ev_station_qs.all()
+
+    def prepare_ev_station_info(self, evs_slots):
+        temp_evs_info = dict(
+            evStationId=self.id,
+            evStationName=self.ev_station_name,
+            evStationAddress=self.ev_address,
+            rating=self.rating,
+            latitude=self.latitude,
+            longitude=self.longitude,
+            country=self.country,
+            state=self.state,
+            city=self.city,
+            areaCode=self.area_code,
+            phone=self.phone,
+            evStationSlots=[]
+        )
+
+        for evs_slot in evs_slots:
+            temp_evs_info['evStationSlots'].append(dict(
+                id=evs_slot.id,
+                isOccupied=evs_slot.is_occupied,
+                ChargesPerHour=evs_slot.charges_per_hour,
+                startHours=evs_slot.start_hours,
+                endHours=evs_slot.end_hours,
+                isAvailable24Hours=evs_slot.is_available_24_hours
+            ))
+        return temp_evs_info
+
