@@ -49,7 +49,7 @@ class EVStationInfo(BaseClass):
 
 class EVScheduleSlot(BaseClass):
     user = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    ev_station = models.ForeignKey(EVStationInfo, on_delete=models.CASCADE)
+    ev_station_slot = models.ForeignKey(EVStationsSlot, on_delete=models.CASCADE)
     free_from = models.DateTimeField(auto_now_add=True, editable=True)
     free_to = models.DateTimeField(default=datetime.datetime.utcnow() + datetime.timedelta(hours=1), editable=True)
     payment_mode = models.CharField(max_length=255)
@@ -66,8 +66,6 @@ class EVStationsSlot(BaseClass):
     start_hours = models.TimeField(blank=True, editable=True)
     end_hours = models.TimeField(blank=True, editable=True)
     is_available_24_hours = models.BooleanField(default=True)
-    free_from = models.DateTimeField(auto_now_add=True, editable=True)
-    free_until = models.DateTimeField(default=datetime.datetime.utcnow() + datetime.timedelta(hours=1), editable=True)
 
     class Meta:
         managed = settings.MANAGE_TABLES
