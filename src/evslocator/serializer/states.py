@@ -3,7 +3,6 @@ from rest_framework import serializers
 from evslocator.models import EVStates
 
 
-
 class StatesSerializer(serializers.ModelSerializer):
     class Meta:
         model = EVStates
@@ -12,5 +11,3 @@ class StatesSerializer(serializers.ModelSerializer):
     @classmethod
     def get_states(cls):
         return EVStates.objects.all()
-
-
