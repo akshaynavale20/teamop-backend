@@ -50,8 +50,8 @@ class EVStationsSlot(BaseClass):
     ev_station = models.ForeignKey(EVStationInfo, on_delete=models.CASCADE)
     is_occupied = models.BooleanField(default=True)
     charges_per_hour = models.FloatField(default=0)
-    start_hours = models.TimeField(blank=True, editable=True)
-    end_hours = models.TimeField(blank=True, editable=True)
+    start_hours = models.TimeField(blank=True, editable=True, null=True)
+    end_hours = models.TimeField(blank=True, editable=True, null=True)
     is_available_24_hours = models.BooleanField(default=True)
 
     objects = models.Manager()
