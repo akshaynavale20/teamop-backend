@@ -8,7 +8,7 @@ from evslocator.serializer import (
 from evslocator.utils import response_formatter
 
 
-class EVScheduleSlot(APIView):
+class EVScheduleSlotAPIView(APIView):
     def post(self, request):
         ev_station_id = request.data['evStationId']
         free_from = request.data['freeFrom']
