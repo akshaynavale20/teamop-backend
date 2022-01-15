@@ -33,3 +33,11 @@ class EVStationInfoSerializer(ModelSerializer):
             'area_code',
             'phone'
         )
+
+    @classmethod
+    def get_ev_station_info_by_id(cls, ev_station_id):
+        return EVStationInfo.objects.get(id=ev_station_id)
+
+    @classmethod
+    def get_ev_station_all(cls):
+        return EVStationInfo.objects.all()

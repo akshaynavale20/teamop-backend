@@ -16,11 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from evslocator.views import EVSlots, index, EVStates
+from evslocator.views import (
+    EVStationInfoAPIView, EVStatesAPIView, EVSlotsAPIView,
+    index
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('v1/evslocator/slots/', EVSlots.as_view(), name='Slots'),
-    path('v1/evslocator/states/', EVStates.as_view(), name='States'),
+    path('v1/evslocator/slots/', EVSlotsAPIView.as_view(), name='Slots'),
+    path('v1/evslocator/states/', EVStatesAPIView.as_view(), name='States'),
     path('health/', index, name='index'),
+    path('v1/evslocator/evstation/info', EVStationInfoAPIView.as_view(), name='ev-station-info')
 ]
