@@ -48,7 +48,10 @@ urlpatterns = [
         name='get-all-area-by-state'
     ),
 
+    # get EV Station & EV Station Slot Info
     path('v1/evslocator/evs/info/', EVStationInfoAPIView.as_view(), name='get-all-filtered-evs'),
     path('v1/evslocator/evs/info/<evs_id>', EVStationInfoAPIView.as_view(), name='get-evs'),
+
+    # Schedule EV Slots
     path('v1/evslocator/evs/slot/schedule', EVScheduleSlotAPIView.as_view(), name='schedule-evs-slot')
 ]

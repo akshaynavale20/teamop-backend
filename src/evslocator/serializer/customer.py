@@ -27,3 +27,7 @@ class CustomerSerializer(ModelSerializer):
             'phone',
             'role'
         )
+
+    @classmethod
+    def get_customer_by_id(cls, customer_id):
+        return Customer.objects.get(id=customer_id, is_delete=False)

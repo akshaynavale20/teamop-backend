@@ -21,7 +21,7 @@ class EVScheduleSlotSerializer(ModelSerializer):
         field = (
             'id',
             'user',
-            'ev_station',
+            'ev_station_slot',
             'free_from',
             'free_to',
             'payment_mode',
@@ -35,3 +35,7 @@ class EVScheduleSlotSerializer(ModelSerializer):
         qs.add(Q(free_from__gte=from_slot), Q.AND)
         qs.add(Q(free_to__lte=to_slot), Q.OR)
         return EVScheduleSlot.objects.filter(qs).all()
+
+    @classmethod
+    def create_schedule(cls, **create_data):
+        return EVScheduleSlot.objects.create(**create_data)

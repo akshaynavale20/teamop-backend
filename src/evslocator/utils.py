@@ -2,6 +2,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.exceptions import _get_error_details
 
+from datetime import datetime
+
 
 class CustomException(Exception):
     status = None
@@ -36,3 +38,10 @@ def custom_exception_handler(exc, context):
     print("response ......", exc)
 
     return response_formatter(getattr(exc, 'status', status.HTTP_400_BAD_REQUEST), str(exc))
+
+
+def combine_date_and_time(c_date, c_time):
+    return datetime.combine(
+        datetime.strptime(c_date, "%Y-%m-%d"),
+        datetime.strptime(c_time, "%I:%s").time()
+    )
