@@ -15,7 +15,7 @@ class EVStationInfoAPIView(APIView):
             ev_stations = EVStationInfoSerializer.get_filtered_ev_stations(
                 state=request.data.get('state_id'),
                 city=request.data.get('city_id'),
-                area=request.data.get('area_code')
+                area=request.data.get('area')
             )
         evs_slots = EVStationSlotSerializer.get_ev_station_slots_by_evs
 

@@ -23,7 +23,7 @@ class EVStationInfoAdmin(admin.ModelAdmin):
         'id', 'created_at', 'modified_at', 'is_deleted',
         'ev_station_name', 'ev_address', 'rating',
         'latitude', 'longitude', 'country',
-        'state', 'city', 'area_code', 'phone'
+        'state', 'city', 'area', 'phone'
     )
 
     search_fields = ('id', 'state', 'city', 'country', 'area', 'phone', 'ev_address', 'ev_station_name')
