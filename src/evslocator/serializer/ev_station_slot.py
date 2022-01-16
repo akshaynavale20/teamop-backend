@@ -41,5 +41,5 @@ class EVStationSlotSerializer(ModelSerializer):
             id=evs_slot_id,
             is_deleted=False,
             ev_station__is_deleted=False
-        ).select_related('ev_station')
+        ).select_related('ev_station').first()
 

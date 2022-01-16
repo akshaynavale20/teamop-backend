@@ -32,11 +32,11 @@ class EVStationInfoAdmin(admin.ModelAdmin):
 class EVScheduleSlotAdmin(admin.ModelAdmin):
     list_display = (
         'id', 'created_at', 'modified_at', 'is_deleted',
-        'customer', 'ev_station_slot', 'free_from', 'free_to', 'payment_mode',
+        'customer_id', 'ev_station_slot_id', 'free_from', 'free_to', 'payment_mode',
     )
 
     search_fields = (
-        'id', 'customer', 'ev_station_slot', 'free_from', 'free_to', 'payment_mode',
+        'id', 'customer_id', 'ev_station_slot_id', 'free_from', 'free_to', 'payment_mode',
     )
 
 

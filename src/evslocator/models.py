@@ -61,8 +61,8 @@ class EVStationsSlot(BaseClass):
 
 
 class EVScheduleSlot(BaseClass):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    ev_station_slot = models.ForeignKey(EVStationsSlot, on_delete=models.CASCADE)
+    customer_id = models.IntegerField()
+    ev_station_slot_id = models.IntegerField()
     free_from = models.DateTimeField(auto_now_add=True, editable=True)
     free_to = models.DateTimeField(editable=True)
     payment_mode = models.CharField(max_length=255)

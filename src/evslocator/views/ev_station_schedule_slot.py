@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-
+import random
 from evslocator.serializer import (
     EVScheduleSlotSerializer,
     EVStationInfoSerializer,
@@ -13,8 +13,8 @@ from evslocator.utils import response_formatter, combine_date_and_time
 class EVScheduleSlotAPIView(APIView):
     def get(self, request):
         ev_station_id = request.data['evStationId']
-        free_from = request.data['freeFrom']
-        free_to = request.data['freeTo']
+        free_from = request.data['date']
+        free_to = request.data['date']
 
         # get EV Station
         ev_station = EVStationInfoSerializer.get_ev_station_info_by_id(ev_station_id)
@@ -61,8 +61,8 @@ class EVScheduleSlotAPIView(APIView):
     def post(self, request):
         customer = request.data['customerId']
         evs_slot_id = request.data['evsSlotId']
-        free_from = request.data['freeFrom']
-        free_to = request.data['freeTo']
+        free_from = request.data['date']
+       # free_to = request.data['freeTo']
         # schedule_date = request.data['scheduleDate']
         # free_from = combine_date_and_time(schedule_date, request.data['freeFrom'])
         # free_to = combine_date_and_time(schedule_date, request.data['freeTo'])
@@ -76,12 +76,13 @@ class EVScheduleSlotAPIView(APIView):
         if not evs_slot:
             # TODO: raise error
             pass
-
+        count = EVScheduleSlotSerializer.get_count()
         evs_schedule = EVScheduleSlotSerializer.create_schedule(**dict(
-            customer=customer_obj.id,
-            ev_station_slot=evs_slot.id,
+            customer_id=customer_obj.id,
+            ev_station_slot_id=evs_slot.id,
             free_from=free_from,
-            free_to=free_to
+            free_to=free_from,
+            id = count + 1
         ))
 
         return response_formatter(
@@ -92,7 +93,6 @@ class EVScheduleSlotAPIView(APIView):
                 customer_id=customer_obj.id,
                 ev_station_slot_id=evs_slot.id,
                 free_from=free_from,
-                free_to=free_to,
                 evs_schedule_slot_id=evs_schedule.id,
             )
         )

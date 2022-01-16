@@ -8,9 +8,8 @@ from evslocator.serializer import CustomerSerializer, EVStationSlotSerializer
 
 
 class EVScheduleSlotSerializer(ModelSerializer):
-    id = IntegerField(read_only=True, required=False)
-    customer = CustomerSerializer(many=True)
-    ev_station_slot = EVStationSlotSerializer(many=True)
+    customer_id= IntegerField(read_only=True, required=False)
+    ev_station_slot_id = IntegerField(read_only=True, required=False)
     free_from = DateTimeField(required=True, allow_null=False)
     free_to = DateTimeField(required=True, allow_null=False)
     payment_mode = CharField()
@@ -20,8 +19,8 @@ class EVScheduleSlotSerializer(ModelSerializer):
         model = EVScheduleSlot
         field = (
             'id',
-            'user',
-            'ev_station_slot',
+            'customer_id',
+            'ev_station_slot_id',
             'free_from',
             'free_to',
             'payment_mode',
@@ -33,9 +32,12 @@ class EVScheduleSlotSerializer(ModelSerializer):
         qs = Q(ev_station_slot__in=evs_slot_ids)
         qs.add(Q(is_deleted=False), Q.AND)
         qs.add(Q(free_from__gte=from_slot), Q.AND)
-        qs.add(Q(free_to__lte=to_slot), Q.OR)
         return EVScheduleSlot.objects.filter(qs).all()
 
     @classmethod
     def create_schedule(cls, **create_data):
         return EVScheduleSlot.objects.create(**create_data)
+
+    @classmethod
+    def get_count(cls):
+        return EVScheduleSlot.objects.count()
