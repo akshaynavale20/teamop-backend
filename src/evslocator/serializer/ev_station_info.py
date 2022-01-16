@@ -50,7 +50,7 @@ class EVStationInfoSerializer(ModelSerializer):
         if city:
             ev_station_qs.filter(city=city)
         if area:
-            ev_station_qs.filter(area=area)
+            ev_station_qs.filter(area_code=area)
         return ev_station_qs.all()
 
     def prepare_ev_station_info(self, evs_slots):
