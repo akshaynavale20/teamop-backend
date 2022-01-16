@@ -9,12 +9,11 @@ from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK, HTTP_201_CR
 from evslocator.utils import response_formatter, combine_date_and_time
 
 
-class EVScheduleSlotAPIView(APIView):
-    def get(self, request):
-
-        ev_station_id =  request.GET.get('evStationId')
-        free_from =  request.GET.get('date')
-        free_to =  request.GET.get('date')
+class EVGetSlotsAPI(APIView):
+    def post(self, request):
+        ev_station_id = request.data['evStationId']
+        free_from = request.data['date']
+        free_to = request.data['date']
 
         # get EV Station
         ev_station = EVStationInfoSerializer.get_ev_station_info_by_id(ev_station_id)
@@ -39,7 +38,7 @@ class EVScheduleSlotAPIView(APIView):
             free_from,
             free_to
         )
-        scheduled_evs_slot_ids = set(scheduled_slot.id for scheduled_slot in scheduled_slots)
+        scheduled_evs_slot_ids = set(scheduled_slot.ev_station_slot.id for scheduled_slot in scheduled_slots)
         available_evs_slots_ids = evs_slot_ids.difference(scheduled_evs_slot_ids)
         if not available_evs_slots_ids:
             return response_formatter(
@@ -58,43 +57,5 @@ class EVScheduleSlotAPIView(APIView):
             )
         )
 
-    def post(self, request):
-        customer = request.data['customerId']
-        evs_slot_id = request.data['evsSlotId']
-        free_from = request.data['date']
-       # free_to = request.data['freeTo']
-        # schedule_date = request.data['scheduleDate']
-        # free_from = combine_date_and_time(schedule_date, request.data['freeFrom'])
-        # free_to = combine_date_and_time(schedule_date, request.data['freeTo'])
-
-        customer_obj = CustomerSerializer.get_customer_by_id(customer)
-        if not customer_obj:
-            # TODO: raise error
-            pass
-
-        evs_slot = EVStationSlotSerializer.get_evs_slot_by_id(evs_slot_id)
-        if not evs_slot:
-            # TODO: raise error
-            pass
-        count = EVScheduleSlotSerializer.get_count()
-        evs_schedule = EVScheduleSlotSerializer.create_schedule(**dict(
-            customer_id=customer_obj.id,
-            ev_station_slot_id=evs_slot.id,
-            free_from=free_from,
-            free_to=free_from,
-            id = count + 1
-        ))
-
-        return response_formatter(
-            status_code=HTTP_201_CREATED,
-            message="created.!",
-            response=dict(
-                customer=customer_obj.display_name,
-                customer_id=customer_obj.id,
-                ev_station_slot_id=evs_slot.id,
-                free_from=free_from,
-                evs_schedule_slot_id=evs_schedule.id,
-            )
-        )
-
+    
 

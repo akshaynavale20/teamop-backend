@@ -15,11 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
 from evslocator.views import (
     EVStationInfoAPIView, EVStatesAPIView, EVSlotsAPIView,
-    index, EVCitiesAPIView, EVAreasAPIView, EVScheduleSlotAPIView
-)
+    index, EVCitiesAPIView, EVAreasAPIView, EVScheduleSlotAPIView,EVGetSlotsAPI)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -53,5 +51,6 @@ urlpatterns = [
     path('v1/evslocator/evs/info/<evs_id>', EVStationInfoAPIView.as_view(), name='get-evs'),
 
     # Schedule EV Slots
-    path('v1/evslocator/evs/slot/schedule', EVScheduleSlotAPIView.as_view(), name='schedule-evs-slot')
+    path('v1/evslocator/evs/slot/schedule', EVScheduleSlotAPIView.as_view(), name='schedule-evs-slot'),
+    path('v1/evslocator/evs/slot/getslots/<state_id>', EVGetSlotsAPI.as_view(), name='get-evs-slot')    
 ]
