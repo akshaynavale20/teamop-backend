@@ -15,7 +15,7 @@ class EVStationInfoSerializer(ModelSerializer):
     country = CharField(required=True, allow_null=False)
     state = CharField(required=True, allow_null=False)
     city = CharField(required=True, allow_null=False)
-    area_code = CharField(required=True, allow_null=False)
+    area = CharField(required=True, allow_null=False)
     phone = CharField(required=True, allow_null=False)
 
     class Meta:
@@ -50,7 +50,7 @@ class EVStationInfoSerializer(ModelSerializer):
         if city:
             ev_station_qs.filter(city=city)
         if area:
-            ev_station_qs.filter(area_code=area)
+            ev_station_qs.filter(area=area)
         return ev_station_qs.all()
 
     def prepare_ev_station_info(self, evs_slots):
