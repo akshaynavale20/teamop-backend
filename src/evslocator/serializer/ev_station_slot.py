@@ -32,14 +32,14 @@ class EVStationSlotSerializer(ModelSerializer):
     def get_ev_station_slots_by_evs(cls, ev_station_id):
         return EVStationsSlot.objects.filter(
             ev_station__id=ev_station_id,
-           # ev_station__is_delete=False
+            ev_station__is_deleted=False
         ).all()
 
     @classmethod
     def get_evs_slot_by_id(cls, evs_slot_id):
         return EVStationsSlot.objects.filter(
             id=evs_slot_id,
-            is_delete=False,
-            ev_station__is_delete=False
+            is_deleted=False,
+            ev_station__is_deleted=False
         ).select_related('ev_station')
 

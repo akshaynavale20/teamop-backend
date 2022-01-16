@@ -48,24 +48,24 @@ class EVScheduleSlotAPIView(APIView):
             )
 
         # Available EVS Slots * EVS Info
-        available_evs_info = [evs for evs in ev_station_slots if evs.id in available_evs_slots_ids]
-
+        available_evs_slots = [evs for evs in ev_station_slots if evs.id in available_evs_slots_ids]
+        available_evs_slots_info = EVStationInfoSerializer.prepare_ev_station_info(ev_station, available_evs_slots)
         return response_formatter(
             status_code=HTTP_200_OK,
             message='Success!',
             response=dict(
-                available_evs_slots_info=[
-                    evs.prepare_ev_station_info(evs) for evs in available_evs_info
-                ]
+                available_evs_slots_info=available_evs_slots_info
             )
         )
 
     def post(self, request):
         customer = request.data['customerId']
         evs_slot_id = request.data['evsSlotId']
-        schedule_date = request.data['scheduleDate']
-        free_from = combine_date_and_time(schedule_date, request.data['freeFrom'])
-        free_to = combine_date_and_time(schedule_date, request.data['freeTo'])
+        free_from = request.data['freeFrom']
+        free_to = request.data['freeTo']
+        # schedule_date = request.data['scheduleDate']
+        # free_from = combine_date_and_time(schedule_date, request.data['freeFrom'])
+        # free_to = combine_date_and_time(schedule_date, request.data['freeTo'])
 
         customer_obj = CustomerSerializer.get_customer_by_id(customer)
         if not customer_obj:

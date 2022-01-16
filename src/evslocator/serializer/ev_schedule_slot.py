@@ -29,8 +29,8 @@ class EVScheduleSlotSerializer(ModelSerializer):
         )
 
     @classmethod
-    def check_evs_schedule_availability_for_slot(cls, ev_station_ids, from_slot, to_slot):
-        qs = Q(ev_station__id__in=ev_station_ids)
+    def check_evs_schedule_availability_for_slot(cls, evs_slot_ids, from_slot, to_slot):
+        qs = Q(ev_station_slot__in=evs_slot_ids)
         qs.add(Q(is_deleted=False), Q.AND)
         qs.add(Q(free_from__gte=from_slot), Q.AND)
         qs.add(Q(free_to__lte=to_slot), Q.OR)

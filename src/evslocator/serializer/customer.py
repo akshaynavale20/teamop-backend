@@ -30,4 +30,4 @@ class CustomerSerializer(ModelSerializer):
 
     @classmethod
     def get_customer_by_id(cls, customer_id):
-        return Customer.objects.get(id=customer_id, is_delete=False)
+        return Customer.objects.get(id=customer_id, is_deleted=False)
