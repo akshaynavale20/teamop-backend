@@ -37,7 +37,7 @@ class EVStationInfo(BaseClass):
     country = models.CharField(max_length=255)
     state = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
-    area = models.CharField(max_length=255)
+    area_code= models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
 
     objects = models.Manager()

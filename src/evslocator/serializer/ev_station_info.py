@@ -64,7 +64,7 @@ class EVStationInfoSerializer(ModelSerializer):
             country=self.country,
             state=self.state,
             city=self.city,
-            areaCode=self.area,
+            areaCode=self.area_code,
             phone=self.phone,
             evStationSlots=[]
         )
